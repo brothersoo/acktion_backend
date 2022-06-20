@@ -18,14 +18,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "acktion_auction_room_participant")
+@Table(name = "acktion_auction_room_participation")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class AuctionRoomParticipant extends BaseTimeStampEntity {
+public class AuctionRoomParticipation extends BaseTimeStampEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "acktion_auction_room_participant_id")
+  @Column(name = "acktion_auction_room_participation_id")
   private Long id;
 
   @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
@@ -39,7 +39,7 @@ public class AuctionRoomParticipant extends BaseTimeStampEntity {
   private AuctionRoom auctionRoom;
 
   @Builder
-  public AuctionRoomParticipant(User participant, AuctionRoom auctionRoom) {
+  public AuctionRoomParticipation(User participant, AuctionRoom auctionRoom) {
     this.participant = participant;
     this.auctionRoom = auctionRoom;
   }

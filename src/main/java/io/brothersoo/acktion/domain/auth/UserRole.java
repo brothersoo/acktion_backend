@@ -18,27 +18,24 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-/**
- * User과 Role 간 Many-To-Many 관계 엔티티
- */
 @Entity
-@Table(name = "ssg_user_role")
+@Table(name = "acktion_user_role")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class UserRole extends BaseTimeStampEntity {
 
   @Id
-  @Column(name = "ssg_user_role_id")
+  @Column(name = "acktion_user_role_id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @ManyToOne(targetEntity = User.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-  @JoinColumn(name = "ssg_user_id")
+  @JoinColumn(name = "acktion_user_id")
   @JsonBackReference
   private User user;
 
   @ManyToOne(targetEntity = Role.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-  @JoinColumn(name = "ssg_role_id")
+  @JoinColumn(name = "acktion_role_id")
   @JsonBackReference
   private Role role;
 

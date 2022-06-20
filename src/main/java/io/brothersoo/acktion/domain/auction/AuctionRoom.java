@@ -43,9 +43,9 @@ public class AuctionRoom extends BaseTimeStampEntity {
   @JoinColumn(name = "acktion_auction_product_id")
   private AuctionProduct auctionProduct;
 
-  @OneToMany(targetEntity = AuctionRoomParticipant.class, mappedBy = "auctionRoom")
+  @OneToMany(targetEntity = AuctionRoomParticipation.class, mappedBy = "auctionRoom")
   @JsonBackReference
-  private List<AuctionRoomParticipant> auctionRoomParticipants;
+  private List<AuctionRoomParticipation> auctionRoomParticipants;
 
   @Builder
   public AuctionRoom(

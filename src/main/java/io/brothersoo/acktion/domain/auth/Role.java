@@ -15,18 +15,14 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-/**
- * 사용자의 권한 단계를 알리는 엔티티
- * 유저는 TEMP_USER, MEMBER, ADMIN 중 하나 혹은 여러개의 Role을 가지고 있습니다.
- */
 @Entity
-@Table(name = "ssg_role")
+@Table(name = "acktion_role")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class Role extends BaseTimeStampEntity {
 
   @Id
-  @Column(name = "ssg_role_id")
+  @Column(name = "acktion_role_id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 

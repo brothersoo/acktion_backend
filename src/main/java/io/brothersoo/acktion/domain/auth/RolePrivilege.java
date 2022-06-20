@@ -17,27 +17,24 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-/**
- * Role과 Privilege 간 Many-to-Many 관계 엔티티
- */
 @Entity
-@Table(name = "ssg_role_privilege")
+@Table(name = "acktion_role_privilege")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class RolePrivilege extends BaseTimeStampEntity {
 
   @Id
-  @Column(name = "ssg_role_privilege_id")
+  @Column(name = "acktion_role_privilege_id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @ManyToOne(targetEntity = Role.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-  @JoinColumn(name = "ssg_role_id")
+  @JoinColumn(name = "acktion_role_id")
   @JsonBackReference
   private Role role;
 
   @ManyToOne(targetEntity = Privilege.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-  @JoinColumn(name = "ssg_privilege_id")
+  @JoinColumn(name = "acktion_privilege_id")
   @JsonBackReference
   private Privilege privilege;
 
