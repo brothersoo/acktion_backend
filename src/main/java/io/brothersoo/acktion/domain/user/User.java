@@ -1,6 +1,5 @@
 package io.brothersoo.acktion.domain.user;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.brothersoo.acktion.domain.BaseTimeStampEntity;
 import io.brothersoo.acktion.domain.auction.AuctionRoomParticipation;
@@ -8,7 +7,9 @@ import io.brothersoo.acktion.domain.auction.SuccessfulAuctionProduct;
 import io.brothersoo.acktion.domain.auth.UserRole;
 import io.brothersoo.acktion.dto.user.UserRegisterRequest;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -34,29 +35,38 @@ public class User extends BaseTimeStampEntity {
   @Column(name = "acktion_user_id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
+
   @Column(name = "username")
   private String username;
+
   @Column(name = "password")
   private String password;
+
   @Column(name = "nickname")
   private String nickname;
+
   @Column(name = "phone_number")
   private String phoneNumber;
+
   @OneToMany(targetEntity = AuctionRoomParticipation.class, mappedBy = "participant")
   @JsonManagedReference
   private List<AuctionRoomParticipation> auctionRoomParticipations;
+
   @OneToMany(targetEntity = SuccessfulAuctionProduct.class, mappedBy = "bidder")
-  @JsonBackReference
+  @JsonManagedReference
   private List<SuccessfulAuctionProduct> boughtProducts;
+
   @OneToMany(targetEntity = SuccessfulAuctionProduct.class, mappedBy = "cosigner")
-  @JsonBackReference
+  @JsonManagedReference
   private List<SuccessfulAuctionProduct> soldProducts;
+
   @OneToMany(targetEntity = UserAddress.class, mappedBy = "user")
-  @JsonBackReference
+  @JsonManagedReference
   private List<UserAddress> addresses;
+
   @OneToMany(targetEntity = UserRole.class, cascade = CascadeType.ALL, mappedBy = "user")
   @JsonManagedReference
-  private List<UserRole> userRoles;
+  private Set<UserRole> userRoles;
 
   public User(UserRegisterRequest request) {
     this.username = request.getUsername();
@@ -67,7 +77,7 @@ public class User extends BaseTimeStampEntity {
     this.boughtProducts = new ArrayList<>();
     this.soldProducts = new ArrayList<>();
     this.addresses = new ArrayList<>();
-    this.userRoles = new ArrayList<>();
+    this.userRoles = new HashSet<>();
   }
 
   @Builder
@@ -77,7 +87,7 @@ public class User extends BaseTimeStampEntity {
       List<SuccessfulAuctionProduct> boughtProducts,
       List<SuccessfulAuctionProduct> soldProducts,
       List<UserAddress> addresses,
-      List<UserRole> userRoles
+      Set<UserRole> userRoles
   ) {
     this.username = username;
     this.password = password;

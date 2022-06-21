@@ -56,8 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .sessionManagement()
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         .and()
-        .addFilter(
-            new CustomAuthenticationFilter(authenticationManagerBean(), authUtil))
+        .addFilter(new CustomAuthenticationFilter(authenticationManagerBean(), authUtil))
         .addFilterBefore(
             new CustomAuthorizationFilter(authUtil), UsernamePasswordAuthenticationFilter.class
         );
