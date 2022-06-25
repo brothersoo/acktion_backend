@@ -2,6 +2,7 @@ package io.brothersoo.acktion.domain.user;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.brothersoo.acktion.domain.BaseTimeStampEntity;
+import io.brothersoo.acktion.domain.auction.AuctionProduct;
 import io.brothersoo.acktion.domain.auction.AuctionRoomParticipation;
 import io.brothersoo.acktion.domain.auction.SuccessfulAuctionProduct;
 import io.brothersoo.acktion.domain.auth.UserRole;
@@ -52,13 +53,13 @@ public class User extends BaseTimeStampEntity {
   @JsonManagedReference
   private List<AuctionRoomParticipation> auctionRoomParticipations;
 
+  @OneToMany(targetEntity = AuctionProduct.class, mappedBy = "cosigner")
+  @JsonManagedReference
+  private List<AuctionProduct> cosignedProducts;
+
   @OneToMany(targetEntity = SuccessfulAuctionProduct.class, mappedBy = "bidder")
   @JsonManagedReference
   private List<SuccessfulAuctionProduct> boughtProducts;
-
-  @OneToMany(targetEntity = SuccessfulAuctionProduct.class, mappedBy = "cosigner")
-  @JsonManagedReference
-  private List<SuccessfulAuctionProduct> soldProducts;
 
   @OneToMany(targetEntity = UserAddress.class, mappedBy = "user")
   @JsonManagedReference
@@ -75,7 +76,7 @@ public class User extends BaseTimeStampEntity {
     this.phoneNumber = request.getPhoneNumber();
     this.auctionRoomParticipations = new ArrayList<>();
     this.boughtProducts = new ArrayList<>();
-    this.soldProducts = new ArrayList<>();
+    this.cosignedProducts = new ArrayList<>();
     this.addresses = new ArrayList<>();
     this.userRoles = new HashSet<>();
   }
@@ -85,7 +86,7 @@ public class User extends BaseTimeStampEntity {
       String username, String password, String nickname, String phoneNumber,
       List<AuctionRoomParticipation> auctionRoomParticipations,
       List<SuccessfulAuctionProduct> boughtProducts,
-      List<SuccessfulAuctionProduct> soldProducts,
+      List<AuctionProduct> cosignedProducts,
       List<UserAddress> addresses,
       Set<UserRole> userRoles
   ) {
@@ -95,7 +96,7 @@ public class User extends BaseTimeStampEntity {
     this.phoneNumber = phoneNumber;
     this.auctionRoomParticipations = auctionRoomParticipations;
     this.boughtProducts = boughtProducts;
-    this.soldProducts = soldProducts;
+    this.cosignedProducts = cosignedProducts;
     this.addresses = addresses;
     this.userRoles = userRoles;
   }

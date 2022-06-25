@@ -1,7 +1,6 @@
 package io.brothersoo.acktion.domain.auction;
 
 import io.brothersoo.acktion.domain.BaseTimeStampEntity;
-import io.brothersoo.acktion.domain.auction.AuctionProduct;
 import io.brothersoo.acktion.domain.user.User;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -46,20 +45,15 @@ public class SuccessfulAuctionProduct extends BaseTimeStampEntity {
   @JoinColumn(name = "acktion_bidder_id")
   private User bidder; // 낙찰자
 
-  @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
-  @JoinColumn(name = "acktion_cosigner_id")
-  private User cosigner; // 낙찰자
-
   @Builder
   public SuccessfulAuctionProduct(
       Long hammerPrice, String bidderName, String cosignerName,
-      AuctionProduct auctionProduct, User bidder, User cosigner
+      AuctionProduct auctionProduct, User bidder
   ) {
     this.hammerPrice = hammerPrice;
     this.bidderName = bidderName;
     this.cosignerName = cosignerName;
     this.auctionProduct = auctionProduct;
     this.bidder = bidder;
-    this.cosigner = cosigner;
   }
 }

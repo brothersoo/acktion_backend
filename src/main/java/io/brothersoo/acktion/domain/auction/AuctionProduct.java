@@ -40,15 +40,15 @@ public class AuctionProduct extends BaseTimeStampEntity {
   private AuctionProductStatus status;
 
   @OneToOne(targetEntity = User.class, fetch = FetchType.LAZY)
-  @JoinColumn(name = "acktion_user_id")
-  private User owner;
+  @JoinColumn(name = "acktion_cosigner_id")
+  private User cosigner;
 
   @Builder
   public AuctionProduct(
-      String name, Long startingPrice, AuctionProductStatus status, User owner
+      String name, Long startingPrice, AuctionProductStatus status, User cosigner
   ) {
     this.startingPrice = startingPrice;
     this.status = status;
-    this.owner = owner;
+    this.cosigner = cosigner;
   }
 }

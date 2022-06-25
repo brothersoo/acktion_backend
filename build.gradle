@@ -8,6 +8,8 @@ group = 'io.brothersoo'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 
+def querydslVersion = '5.0.0'
+
 configurations {
     compileOnly {
         extendsFrom annotationProcessor
@@ -30,8 +32,10 @@ dependencies {
     implementation group: 'com.auth0', name: 'java-jwt', version: '3.19.2'
 
     //	queryDSL
-    implementation 'com.querydsl:querydsl-jpa'
-    annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jpa"
+    implementation "com.querydsl:querydsl-jpa:${querydslVersion}"
+    implementation "com.querydsl:querydsl-apt:${querydslVersion}"
+    implementation "com.querydsl:querydsl-core:${querydslVersion}"
+    annotationProcessor "com.querydsl:querydsl-apt:${querydslVersion}:jpa"
     annotationProcessor 'jakarta.persistence:jakarta.persistence-api'
     annotationProcessor 'jakarta.annotation:jakarta.annotation-api'
 
@@ -47,6 +51,9 @@ dependencies {
     // lombok
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+
+    // h2
+    runtimeOnly 'com.h2database:h2'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
