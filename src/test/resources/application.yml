@@ -1,9 +1,10 @@
 spring:
+  # datasource
   datasource:
-    url: jdbc:h2:mem:testdb;MODE=MYSQL;DB_CLOSE_DELAY=-1
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ENC(EJk6emXNlNlUHz7SWHTxXLsQSQsUEK/BCWPjp0+cduhs1bniSBkd1Z1QGVtKL571cOch6s/e9BESfNewafR/naKeF6pigGiACWwa5YUuFpGJMHinNyuwN1A7t3wZa8XX7++zyP1PEkL5jWXJz1K9KWHScOl9oXTD6z3brsLmmqLSRZ3pyv4sYUh2udkddR5v)
+    username: ENC(JApncTisHMM7EEb0NIBcUh2lEiMI64Oe)
+    password: ENC(T5oUh1ta42eNWlfWD9r9OkS2nCu7tE0J)
 
   jpa:
     properties:
@@ -17,14 +18,10 @@ spring:
       format_sql: true
     defer-datasource-initialization: true
 
-  h2:
-    console:
-      enabled: true
-
 # jasypt
 jasypt:
   encryptor:
-    password: silly_secret
+    password: ${JASYPT_PASSWORD}
 
 # JWT
 jwt:

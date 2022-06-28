@@ -5,7 +5,7 @@ import io.brothersoo.acktion.domain.auth.UserRole;
 import io.brothersoo.acktion.domain.user.User;
 import io.brothersoo.acktion.repository.role.RoleRepository;
 import io.brothersoo.acktion.repository.role.UserRoleRepository;
-import java.util.Locale;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,14 +15,13 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class RoleServiceImpl implements RoleService {
 
+  private static final String ROLE_PREFIX = "ROLE_";
   private final RoleRepository roleRepository;
   private final UserRoleRepository userRoleRepository;
 
-  private static final String ROLE_PREFIX = "ROLE_";
-
   @Override
   @Transactional
-  public Long grantRoleToUser(User user, String roleName) {
+  public UUID grantRoleToUser(User user, String roleName) {
     Role role = findRoleByNameAndValidate(roleName);
     UserRole userRole = UserRole.builder().user(user).role(role).build();
     UserRole persistedRole = userRoleRepository.save(userRole);

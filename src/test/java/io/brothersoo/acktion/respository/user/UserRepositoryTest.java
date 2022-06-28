@@ -6,20 +6,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 import io.brothersoo.acktion.domain.user.User;
 import io.brothersoo.acktion.repository.user.UserRepository;
 import io.brothersoo.acktion.service.role.RoleService;
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashSet;
 import javax.persistence.EntityManager;
-import javax.sql.DataSource;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
@@ -33,24 +28,10 @@ class UserRepositoryTest {
   UserRepository userRepository;
   @Autowired
   RoleService roleService;
-  @Autowired
-  DataSource dataSource;
 
   private User coolUser;
   private String username;
   private String nickname;
-
-  @BeforeAll
-  void beforeAll() {
-    try (Connection conn = dataSource.getConnection()) {
-      ScriptUtils.executeSqlScript(
-          conn,
-          new ClassPathResource("db/ddl/RolePrivilege.sql")
-      );
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-  }
 
   @BeforeEach
   void beforeEach() {
@@ -70,6 +51,16 @@ class UserRepositoryTest {
     roleService.grantRoleToUser(user, MEMBER.name());
     entityManager.persist(user);
     coolUser = user;
+  }
+
+  @Test
+  @DisplayName("id로 사용자 탐색 테스트 성공")
+  void findByIdSuccessTest() {
+    // when
+    User user = userRepository.findById(coolUser.getId()).get();
+
+    //then
+    assertThat(user).isEqualTo(coolUser);
   }
 
   @Test

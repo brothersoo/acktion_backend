@@ -3,13 +3,13 @@ package io.brothersoo.acktion.domain.auction;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import io.brothersoo.acktion.domain.BaseTimeStampEntity;
 import java.util.List;
+import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -19,6 +19,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "acktion_auction_room")
@@ -27,9 +28,10 @@ import lombok.NoArgsConstructor;
 public class AuctionRoom extends BaseTimeStampEntity {
 
   @Id
-  @Column(name = "acktion_auction_room_id")
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  @Column(name = "acktion_auction_room_id", columnDefinition = "BINARY(16)")
+  @GeneratedValue(generator = "uuid2")
+  @GenericGenerator(name = "uuid2", strategy = "uuid2")
+  private UUID id;
 
   @Column(name = "name")
   private String name;
@@ -37,7 +39,6 @@ public class AuctionRoom extends BaseTimeStampEntity {
   @Column
   @Enumerated(value = EnumType.STRING)
   private AuctionRoomStatus status;
-
 
   @OneToOne(targetEntity = AuctionProduct.class, fetch = FetchType.LAZY)
   @JoinColumn(name = "acktion_auction_product_id")
@@ -49,7 +50,7 @@ public class AuctionRoom extends BaseTimeStampEntity {
 
   @Builder
   public AuctionRoom(
-      Long id, String name, AuctionRoomStatus status, AuctionProduct auctionProduct
+      UUID id, String name, AuctionRoomStatus status, AuctionProduct auctionProduct
   ) {
     this.id = id;
     this.name = name;
